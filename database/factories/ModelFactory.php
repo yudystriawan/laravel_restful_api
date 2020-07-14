@@ -3,6 +3,7 @@
 /** @var Factory $factory */
 
 use App\Category;
+use App\Product;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
@@ -39,3 +40,13 @@ $factory->define(Category::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(Product::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+        'description' => $faker->paragraph(1),
+        'quantity' => $faker->numberBetween(1, 10),
+        'status' => $faker->randomElement([Product::AVAILABLE_PRODUCT, Product::UNAVAILABLE_PRODUCT]),
+        'image' => $faker->randomElement(['default_1.jpg', 'default_2.jpg', 'default_3.jpg']),
+        'seller_id' => User::all()->random()->id,
+    ];
+});
